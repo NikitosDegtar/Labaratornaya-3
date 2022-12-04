@@ -1,48 +1,44 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
- 
-int isValid(char number[])
-{   int sum = 0, i = 0, rightSum = 0, rightDigits = 0, count = 0;
-    char a,b;
-    
-    for( ;i<4; i++)
-        sum += (int)number[i] - 48;
-    if(sum == 30)
-        rightSum = 1;
- 
-    a = number[0];
-    count++;
-    for(i = 2; i<4; i++)
-    {   if(count == 1 && number[i] != a)
-        {   b = number[i];
-            count++;
-        }
-        else if(count == 2 && number[i] != a && number[i] != b)
-            count++;
+#include <stdbool.h>
+bool cond (int x) {
+  int number;
+  int n1=-1, n2=-1, res=0;
+  while (x > 0){
+    number=x%10;
+    x /= 10;
+    if (n1==-1){
+      n1=number;
     }
- 
-    if(count<=2)
-        rightDigits = 1;
- 
-    return rightSum && rightDigits;
+    else {
+      if (number!=n1){
+    if (n2==-1) n2=number;
+    else 
+      if (number != n2)
+        return false;   
+       }      
+    }
+    res += number;   
+   }
+  if (res == 30) return true;
+  else return false;
 }
- 
-int main()
-{   char buf[6];
-    int a = 2*7*11, i = 2, check;
-    
-    for(;;i++)
-    {   check = a*i;
-        itoa(check, buf, 10);
-        if(strlen(buf) < 4)
-            continue;
-        else if(strlen(buf)==4 && isValid(buf))
-        {   printf("Number: %s", buf);
-            break;
-        }
+
+int main() {
+  int x=0, n=7;
+  bool is = false;
+  while (true) {
+    x=n*2*7*11;
+    if (x >9999) break;
+    if (cond(x)) {
+      printf ("Number = %d\n", x);
+      is=true;
     }
- 
-    getchar();
-    return 0;
+    n++;
+  }
+
+  if (!is){
+    printf ("No result\n");
+  }
+  return 0;
+
 }
